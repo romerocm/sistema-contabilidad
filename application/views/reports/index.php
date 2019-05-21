@@ -152,7 +152,6 @@
                 <th>Total Inventario</th>                
                 
                 <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
-                  <th>Acción</th>
                 <?php endif; ?>
               </tr>
               </thead>
