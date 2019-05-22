@@ -31,7 +31,7 @@ class Model_reports extends CI_Model
 		return $return_data;
 	}
 
-	// getting the order reports based on the year and moths
+	// getting the order reports based on the year and months
 	public function getOrderData($year)
 	{	
 		if($year) {
