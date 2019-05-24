@@ -159,12 +159,12 @@
                 <th>Cantidad Entrada</th>
                 <th>Costo Unitario Entrada</th>
                 <th>Total Entrada</th>
-                <th>Cantidad Salida</th>
-                <th>Costo Unitario Salida</th>
-                <th>Total Salida</th>
                 <th>Cantidad Inventario</th>
                 <th>Costo Unitario Inventario</th>
                 <th>Total Inventario</th>
+                <th>Cantidad Salida</th>
+                <th>Costo Unitario Salida</th>
+                <th>Total Salida</th>
                 </tr>";
 
             while($row = mysqli_fetch_array($result))
