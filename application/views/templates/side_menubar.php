@@ -57,7 +57,7 @@
           <?php if(in_array('createBrand', $user_permission) || in_array('updateBrand', $user_permission) || in_array('viewBrand', $user_permission) || in_array('deleteBrand', $user_permission)): ?>
             <li id="brandNav">
               <a href="<?php echo base_url('brands/') ?>">
-                <i class="glyphicon glyphicon-tags"></i> <span>Autor</span>
+                <i class="glyphicon glyphicon-tags"></i> <span>Marcas</span>
               </a>
             </li>
           <?php endif; ?>
