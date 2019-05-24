@@ -112,7 +112,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="category">Categoria</label>
+                  <label for="category">Cristales</label>
                   <?php $category_data = json_decode($product_data['category_id']); ?>
                   <select class="form-control select_group" id="category" name="category[]" multiple="multiple">
                     <?php foreach ($category as $k => $v): ?>

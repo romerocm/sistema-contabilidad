@@ -95,7 +95,7 @@
                 <?php endif; ?>
 
                 <div class="form-group">
-                  <label for="brands">Autor</label>
+                  <label for="brands">Marca</label>
                   <select class="form-control select_group" id="brands" name="brands[]" multiple="multiple">
                     <?php foreach ($brands as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="category">Categoria</label>
+                  <label for="category">Cristales</label>
                   <select class="form-control select_group" id="category" name="category[]" multiple="multiple">
                     <?php foreach ($category as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
