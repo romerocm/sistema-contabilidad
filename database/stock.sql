@@ -2,10 +2,10 @@
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 22-05-2019 a las 20:38:02
--- Versión del servidor: 10.1.39-MariaDB
--- Versión de PHP: 7.2.18
+-- Host: 127.0.0.1
+-- Generation Time: May 24, 2019 at 03:00 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `stock`
+-- Database: `stock`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `attributes`
+-- Table structure for table `attributes`
 --
 
 CREATE TABLE `attributes` (
@@ -35,7 +35,7 @@ CREATE TABLE `attributes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `attributes`
+-- Dumping data for table `attributes`
 --
 
 INSERT INTO `attributes` (`id`, `name`, `active`) VALUES
@@ -44,7 +44,7 @@ INSERT INTO `attributes` (`id`, `name`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `attribute_value`
+-- Table structure for table `attribute_value`
 --
 
 CREATE TABLE `attribute_value` (
@@ -54,7 +54,7 @@ CREATE TABLE `attribute_value` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `attribute_value`
+-- Dumping data for table `attribute_value`
 --
 
 INSERT INTO `attribute_value` (`id`, `value`, `attribute_parent_id`) VALUES
@@ -73,7 +73,7 @@ INSERT INTO `attribute_value` (`id`, `value`, `attribute_parent_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `brands`
+-- Table structure for table `brands`
 --
 
 CREATE TABLE `brands` (
@@ -83,7 +83,7 @@ CREATE TABLE `brands` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `brands`
+-- Dumping data for table `brands`
 --
 
 INSERT INTO `brands` (`id`, `name`, `active`) VALUES
@@ -93,7 +93,7 @@ INSERT INTO `brands` (`id`, `name`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categories`
+-- Table structure for table `categories`
 --
 
 CREATE TABLE `categories` (
@@ -103,7 +103,7 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `categories`
+-- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`id`, `name`, `active`) VALUES
@@ -116,7 +116,7 @@ INSERT INTO `categories` (`id`, `name`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `company`
+-- Table structure for table `company`
 --
 
 CREATE TABLE `company` (
@@ -132,7 +132,7 @@ CREATE TABLE `company` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `company`
+-- Dumping data for table `company`
 --
 
 INSERT INTO `company` (`id`, `company_name`, `service_charge_value`, `vat_charge_value`, `address`, `phone`, `country`, `message`, `currency`) VALUES
@@ -141,7 +141,7 @@ INSERT INTO `company` (`id`, `company_name`, `service_charge_value`, `vat_charge
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `groups`
+-- Table structure for table `groups`
 --
 
 CREATE TABLE `groups` (
@@ -151,7 +151,7 @@ CREATE TABLE `groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `groups`
+-- Dumping data for table `groups`
 --
 
 INSERT INTO `groups` (`id`, `group_name`, `permission`) VALUES
@@ -162,7 +162,7 @@ INSERT INTO `groups` (`id`, `group_name`, `permission`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `orders`
+-- Table structure for table `orders`
 --
 
 CREATE TABLE `orders` (
@@ -184,7 +184,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `orders`
+-- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`id`, `bill_no`, `customer_name`, `customer_address`, `customer_phone`, `date_time`, `gross_amount`, `service_charge_rate`, `service_charge`, `vat_charge_rate`, `vat_charge`, `net_amount`, `discount`, `paid_status`, `user_id`) VALUES
@@ -193,7 +193,7 @@ INSERT INTO `orders` (`id`, `bill_no`, `customer_name`, `customer_address`, `cus
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `orders_item`
+-- Table structure for table `orders_item`
 --
 
 CREATE TABLE `orders_item` (
@@ -206,44 +206,65 @@ CREATE TABLE `orders_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `orders_item`
+-- Dumping data for table `orders_item`
 --
 
 INSERT INTO `orders_item` (`id`, `order_id`, `product_id`, `qty`, `rate`, `amount`) VALUES
 (2, 1, 2, '1', '12.30', '12.30');
 
+--
+-- Triggers `orders_item`
+--
+DELIMITER $$
+CREATE TRIGGER `pepsVentasInsert` AFTER INSERT ON `orders_item` FOR EACH ROW BEGIN
+INSERT INTO peps_ventas VALUES(new.qty,new.rate,new.amount);
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `pepsVentasUpdate` AFTER UPDATE ON `orders_item` FOR EACH ROW BEGIN
+INSERT INTO peps_ventas VALUES(new.qty,new.rate,new.amount);
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `peps`
+-- Table structure for table `peps_compras`
 --
 
-CREATE TABLE `peps` (
+CREATE TABLE `peps_compras` (
   `Fecha` datetime NOT NULL,
   `Detalle` text,
   `Cantidad_c` varchar(200) DEFAULT NULL,
   `Precio_uni_c` varchar(200) DEFAULT NULL,
-  `Total_c` varchar(200) DEFAULT NULL,
-  `Cantidad_v` varchar(200) DEFAULT NULL,
-  `Precio_uni_v` varchar(200) DEFAULT NULL,
-  `Total_v` varchar(200) DEFAULT NULL,
-  `Cantidad_i` varchar(200) DEFAULT NULL,
-  `Precio_uni_i` varchar(200) DEFAULT NULL,
-  `Total_i` varchar(200) DEFAULT NULL
+  `Total_c` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `peps`
---
-
-INSERT INTO `peps` (`Fecha`, `Detalle`, `Cantidad_c`, `Precio_uni_c`, `Total_c`, `Cantidad_v`, `Precio_uni_v`, `Total_v`, `Cantidad_i`, `Precio_uni_i`, `Total_i`) VALUES
-('2019-05-22 00:00:00', 'Compra', '12', '12', '144', NULL, NULL, NULL, NULL, NULL, NULL),
-('2019-05-22 12:32:37', 'Compra', '5', '10', '50', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `products`
+-- Table structure for table `peps_ventas`
+--
+
+CREATE TABLE `peps_ventas` (
+  `Cantidad_v` varchar(200) NOT NULL,
+  `Precio_uni_v` varchar(200) NOT NULL,
+  `Total_v` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `peps_ventas`
+--
+
+INSERT INTO `peps_ventas` (`Cantidad_v`, `Precio_uni_v`, `Total_v`) VALUES
+('2', '15.99', '31.98');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
 --
 
 CREATE TABLE `products` (
@@ -262,23 +283,30 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `products`
+-- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `sku`, `price`, `qty`, `image`, `description`, `attribute_value_id`, `brand_id`, `category_id`, `store_id`, `availability`) VALUES
-(1, 'Maze Runner (Maze Runner Series)', 'Maz/Acc', '15.99', '25', 'assets/images/product_image/5cdf63dc1e088.jpg', '<p>El primer libro de la exitosa serie MazeRunner del New York Times, ¡ahora una serie de películas importantes protagonizada por Dylan O\'Brien!<br></p>', 'null', '[\"1\"]', 'null', 1, 1),
+(1, 'Maze Runner (Maze Runner Series)', 'Maz/Acc', '15.99', '23', 'assets/images/product_image/5cdf63dc1e088.jpg', '<p>El primer libro de la exitosa serie MazeRunner del New York Times, ¡ahora una serie de películas importantes protagonizada por Dylan O\'Brien!<br></p>', 'null', '[\"1\"]', 'null', 1, 1),
 (2, 'It (BEST SELLER)', 'It(/Ter', '12.30', '34', 'assets/images/product_image/5cdf639831170.jpg', '<p>\r\n\r\n</p><p><b>¿Quién o qué mutila y mata a los niños de un pequeño pueblo norteamericano?</b><br><b>¿Por qué llega cíclicamente el horror a Derry en forma de un payaso siniestro que va sembrando la destrucción a su paso?</b></p><p>Esto es lo que se proponen averiguar los protagonistas de esta novela. Tras veintisiete años de tranquilidad y lejanía, una antigua promesa infantil les hace volver al lugar en el que vivieron su infancia y juventud como una terrible pesadilla. Regresan a Derry para enfrentarse con su pasado y enterrar definitivamente la amenaza que los amargó durante su niñez.</p>\r\n\r\n<br><p></p>', '[\"17\"]', '[\"2\"]', '[\"4\"]', 1, 1),
-(9, '12', '12', '12', '12', '<p>You did not select a file to upload.</p>', '<p>12</p>', '[\"14\"]', '[\"1\"]', '[\"3\"]', 1, 1),
-(11, 'qwe', '12', '10', '5', '<p>You did not select a file to upload.</p>', '<p>12</p>', '[\"14\"]', '[\"1\"]', '[\"1\"]', 1, 1);
+(14, 'probando juju', '12', '20', '5', '<p>You did not select a file to upload.</p>', '<p>asd</p>', '[\"14\"]', '[\"1\"]', '[\"1\"]', 1, 1);
 
 --
--- Disparadores `products`
+-- Triggers `products`
 --
 DELIMITER $$
-CREATE TRIGGER `pepsinvent` AFTER INSERT ON `products` FOR EACH ROW BEGIN
+CREATE TRIGGER `pepsComprasInsert` AFTER INSERT ON `products` FOR EACH ROW BEGIN
 DECLARE tot varchar(200);
 SET tot=(new.qty)*(new.price);
-INSERT INTO peps VALUES(CURRENT_TIMESTAMP(),'Compra',new.qty,new.price,tot,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO peps_compras VALUES(CURRENT_TIMESTAMP(),new.name,new.qty,new.price,tot);
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `pepsComprasUpdate` AFTER UPDATE ON `products` FOR EACH ROW BEGIN
+DECLARE tot varchar(200);
+SET tot=(new.qty)*(new.price);
+INSERT INTO peps_compras VALUES(CURRENT_TIMESTAMP(),new.name,new.qty,new.price,tot);
 END
 $$
 DELIMITER ;
@@ -286,7 +314,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `stores`
+-- Table structure for table `stores`
 --
 
 CREATE TABLE `stores` (
@@ -296,7 +324,7 @@ CREATE TABLE `stores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `stores`
+-- Dumping data for table `stores`
 --
 
 INSERT INTO `stores` (`id`, `name`, `active`) VALUES
@@ -305,7 +333,7 @@ INSERT INTO `stores` (`id`, `name`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -320,7 +348,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `firstname`, `lastname`, `phone`, `gender`) VALUES
@@ -329,7 +357,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `firstname`, `lastna
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user_group`
+-- Table structure for table `user_group`
 --
 
 CREATE TABLE `user_group` (
@@ -339,160 +367,160 @@ CREATE TABLE `user_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `user_group`
+-- Dumping data for table `user_group`
 --
 
 INSERT INTO `user_group` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `attributes`
+-- Indexes for table `attributes`
 --
 ALTER TABLE `attributes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `attribute_value`
+-- Indexes for table `attribute_value`
 --
 ALTER TABLE `attribute_value`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `brands`
+-- Indexes for table `brands`
 --
 ALTER TABLE `brands`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `categories`
+-- Indexes for table `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `company`
+-- Indexes for table `company`
 --
 ALTER TABLE `company`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `groups`
+-- Indexes for table `groups`
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `orders`
+-- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `orders_item`
+-- Indexes for table `orders_item`
 --
 ALTER TABLE `orders_item`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `products`
+-- Indexes for table `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `stores`
+-- Indexes for table `stores`
 --
 ALTER TABLE `stores`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `user_group`
+-- Indexes for table `user_group`
 --
 ALTER TABLE `user_group`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `attributes`
+-- AUTO_INCREMENT for table `attributes`
 --
 ALTER TABLE `attributes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `attribute_value`
+-- AUTO_INCREMENT for table `attribute_value`
 --
 ALTER TABLE `attribute_value`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT de la tabla `brands`
+-- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `categories`
+-- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de la tabla `company`
+-- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `groups`
+-- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `orders`
+-- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `orders_item`
---
-ALTER TABLE `orders_item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `products`
+-- AUTO_INCREMENT for table `orders_item`
 --
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+ALTER TABLE `orders_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `stores`
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `user_group`
+-- AUTO_INCREMENT for table `user_group`
 --
 ALTER TABLE `user_group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;

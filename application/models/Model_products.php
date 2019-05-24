@@ -61,4 +61,17 @@ class Model_products extends CI_Model
 		return $query->num_rows();
 	}
 
+	public function getPepsData() {
+
+		if($Fecha) {
+			$sql = "SELECT * FROM peps_compras where Fecha = ?";
+			$query = $this->db->query($sql, array($Fecha));
+			return $query->row_array();
+		}
+
+		$sql = "SELECT * FROM peps_compras ORDER BY Fecha DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
 }

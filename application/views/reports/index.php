@@ -134,13 +134,28 @@
           <div class="box-header">
             <h3 class="box-title">REPORTE PEPS</h3>
           </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <table id="manageTable" class="table table-bordered table-striped">
-              <thead>
-              <tr>
+        <?php 
+        
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $conexion = new mysqli($servername, $username, $password);
+        mysqli_select_db($conexion, "stock");
+        
+        // Create connection
+
+          $result =  mysqli_query($conexion, "SELECT * FROM peps_compras, peps_ventas");
+
+          if (!$result) {
+            printf("Error: %s\n", mysqli_error($result));
+            exit();
+        } 
+
+          echo "<div class='box-body'>";
+          echo "<table id='manageTable' class='table table-bordered table-striped'>
+                <tr>
                 <th>Fecha</th>
-                <th>Evento</th>
+                <th>Detalle</th>
                 <th>Cantidad Entrada</th>
                 <th>Costo Unitario Entrada</th>
                 <th>Total Entrada</th>
@@ -149,15 +164,35 @@
                 <th>Total Salida</th>
                 <th>Cantidad Inventario</th>
                 <th>Costo Unitario Inventario</th>
-                <th>Total Inventario</th>                
-                
-                <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
-                <?php endif; ?>
-              </tr>
-              </thead>
+                <th>Total Inventario</th>
+                </tr>";
 
-            </table>
-          </div>
+            while($row = mysqli_fetch_array($result))
+            {
+                echo "<tr><td>";
+                echo $row['Fecha'];
+                echo "</td><td>";
+                echo $row['Detalle'];
+                echo "</td><td>";
+                echo $row['Cantidad_c'];
+                echo "</td><td>";
+                echo $row['Precio_uni_c'];
+                echo "</td><td>";
+                echo $row['Total_c'];
+                echo "</td><td>";
+                echo $row['Cantidad_v'];
+                echo "</td><td>";
+                echo $row['Precio_uni_v'];
+                echo "</td><td>";
+                echo $row['Total_v'];
+                echo "</td>
+                             
+                </tr>";
+            }
+
+            echo "</table>";
+            echo "</div>";
+            ?>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -165,7 +200,6 @@
       <!-- col-md-12 -->
     </div>
     <!-- /.row -->
-    
 
  
   <!-- /.content -->
@@ -182,6 +216,9 @@
 
     $(document).ready(function() {
       $("#reportNav").addClass('active');
+      $("#mainProductNav").addClass('active');
+      $("#manageProductNav").addClass('active');
+      
     }); 
 
     var report_data = <?php echo '[' . implode(',', $results) . ']'; ?>;
