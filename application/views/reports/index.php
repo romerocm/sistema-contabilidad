@@ -135,12 +135,13 @@
             <h3 class="box-title">REPORTE PEPS</h3>
           </div>
         <?php 
+        //AQUI SE HACE LA PARTE DEL REPORTE
         
-        $servername = "us-cdbr-iron-east-02.cleardb.net";
-        $username = "bbb8186a535d47";
-        $password = "63fa7fe1";
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
         $conexion = new mysqli($servername, $username, $password);
-        mysqli_select_db($conexion, "heroku_78bf06367c2c1a6");
+        mysqli_select_db($conexion, "stock");
         
         // Create connection
 
