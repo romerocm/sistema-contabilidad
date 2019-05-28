@@ -179,15 +179,16 @@
                 echo $row['Precio_uni_c'];
                 echo "</td><td>";
                 echo $row['Total_c'];
-                echo "</td><td>";
-                echo $row['Cantidad_v'];
-                echo "</td><td>";
-                echo $row['Precio_uni_v'];
-                echo "</td><td>";
-                echo $row['Total_v'];
-                echo "</td>
+                echo "</td>";
+                // <td>";
+                // echo $row['Cantidad_v'];
+                // echo "</td><td>";
+                // echo $row['Precio_uni_v'];
+                // echo "</td><td>";
+                // echo $row['Total_v'];
+                // echo "</td>
                              
-                </tr>";
+              echo "</tr>";
             }
 
             echo "</table>";

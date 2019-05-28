@@ -100,7 +100,7 @@
                   <li id="addProductNav"><a href="<?php echo base_url('products/create') ?>"><i class="fa fa-circle-o"></i> Agregar Producto</a></li>
                 <?php endif; ?>
                 <?php if(in_array('updateProduct', $user_permission) || in_array('viewProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
-                <li id="manageProductNav"><a href="<?php echo base_url('products') ?>"><i class="fa fa-circle-o"></i> Gestionar Productos</a></li>
+                <li id="manageProductNav"><a href="<?php echo base_url('products') ?>"><i class="fa fa-circle-o"></i> Inventario</a></li>
                 <?php endif; ?>
               </ul>
             </li>
