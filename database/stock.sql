@@ -222,12 +222,12 @@ INSERT INTO `orders_item` (`id`, `order_id`, `product_id`, `qty`, `rate`, `amoun
 --
 -- Disparadores `orders_item`
 --
-DELIMITER $$
-CREATE TRIGGER `pepsVenta` AFTER INSERT ON `orders_item` FOR EACH ROW BEGIN
-INSERT INTO peps VALUES(CURRENT_TIMESTAMP(),'Venta',NULL,NULL,NULL,new.qty,new.rate,new.amount,NULL,NULL,NULL);
-END
-$$
-DELIMITER ;
+-- DELIMITER $$
+-- CREATE TRIGGER `pepsVenta` AFTER INSERT ON `orders_item` FOR EACH ROW BEGIN
+-- INSERT INTO peps VALUES(CURRENT_TIMESTAMP(),'Venta',NULL,NULL,NULL,new.qty,new.rate,new.amount,NULL,NULL,NULL);
+-- END
+-- $$
+-- DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -301,14 +301,14 @@ INSERT INTO `products` (`id`, `name`, `sku`, `price`, `qty`, `image`, `descripti
 --
 -- Disparadores `products`
 --
-DELIMITER $$
-CREATE TRIGGER `pepsinvent` AFTER INSERT ON `products` FOR EACH ROW BEGIN
-DECLARE tot varchar(200);
-SET tot=(new.qty)*(new.price);
-INSERT INTO peps VALUES(CURRENT_TIMESTAMP(),'Compra',new.qty,new.price,tot,NULL,NULL,NULL,NULL,NULL,NULL);
-END
-$$
-DELIMITER ;
+-- DELIMITER $$
+-- CREATE TRIGGER `pepsinvent` AFTER INSERT ON `products` FOR EACH ROW BEGIN
+-- DECLARE tot varchar(200);
+-- SET tot=(new.qty)*(new.price);
+-- INSERT INTO peps VALUES(CURRENT_TIMESTAMP(),'Compra',new.qty,new.price,tot,NULL,NULL,NULL,NULL,NULL,NULL);
+-- END
+-- $$
+-- DELIMITER ;
 
 -- --------------------------------------------------------
 
