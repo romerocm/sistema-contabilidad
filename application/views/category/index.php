@@ -6,11 +6,11 @@
   <section class="content-header">
     <h1>
       Gestionar
-      <small>Cristales</small>
+      <small>Categoria</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Cristales</li>
+      <li class="active">Categoria</li>
     </ol>
   </section>
 
@@ -41,14 +41,14 @@
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Gestionar Cristales</h3>
+            <h3 class="box-title">Gestionar Categorias</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Nombre de Cristales</th>
+                <th>Nombre de Categoria</th>
                 <th>Estado</th>
                 <?php if(in_array('updateCategory', $user_permission) || in_array('deleteCategory', $user_permission)): ?>
                   <th>Acción</th>
@@ -79,7 +79,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Agregar Cristales</h4>
+        <h4 class="modal-title">Agregar Categoria</h4>
       </div>
 
       <form role="form" action="<?php echo base_url('category/create') ?>" method="post" id="createForm">
@@ -87,7 +87,7 @@
         <div class="modal-body">
 
           <div class="form-group">
-            <label for="brand_name">Nombre de Cristales</label>
+            <label for="brand_name">Nombre de Categoria</label>
             <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter category name" autocomplete="off">
           </div>
           <div class="form-group">
@@ -119,7 +119,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Editar Cristales</h4>
+        <h4 class="modal-title">Editar Categoria</h4>
       </div>
 
       <form role="form" action="<?php echo base_url('category/update') ?>" method="post" id="updateForm">
@@ -128,7 +128,7 @@
           <div id="messages"></div>
 
           <div class="form-group">
-            <label for="edit_brand_name">Nombre de Cristales</label>
+            <label for="edit_brand_name">Nombre de Categoria</label>
             <input type="text" class="form-control" id="edit_category_name" name="edit_category_name" placeholder="Enter category name" autocomplete="off">
           </div>
           <div class="form-group">
@@ -160,7 +160,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Remover Cristales</h4>
+        <h4 class="modal-title">Remover Categorias</h4>
       </div>
 
       <form role="form" action="<?php echo base_url('category/remove') ?>" method="post" id="removeForm">
