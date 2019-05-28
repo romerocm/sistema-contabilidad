@@ -136,11 +136,11 @@
           </div>
         <?php 
         
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
+        $servername = "us-cdbr-iron-east-02.cleardb.net";
+        $username = "bbb8186a535d47";
+        $password = "63fa7fe1";
         $conexion = new mysqli($servername, $username, $password);
-        mysqli_select_db($conexion, "stock");
+        mysqli_select_db($conexion, "heroku_78bf06367c2c1a6");
         
         // Create connection
 
@@ -179,16 +179,15 @@
                 echo $row['Precio_uni_c'];
                 echo "</td><td>";
                 echo $row['Total_c'];
-                echo "</td>";
-                // <td>";
-                // echo $row['Cantidad_v'];
-                // echo "</td><td>";
-                // echo $row['Precio_uni_v'];
-                // echo "</td><td>";
-                // echo $row['Total_v'];
-                // echo "</td>
+                echo "</td><td>";
+                echo $row['Cantidad_v'];
+                echo "</td><td>";
+                echo $row['Precio_uni_v'];
+                echo "</td><td>";
+                echo $row['Total_v'];
+                echo "</td>
                              
-              echo "</tr>";
+                </tr>";
             }
 
             echo "</table>";
