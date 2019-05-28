@@ -88,7 +88,7 @@
   <script src="<?php echo base_url('assets/plugins/fileinput/fileinput.min.js') ?>"></script>
 
   <!-- ChartJS -->
-  <script src="<?php echo base_url('assets/bower_components/Chart.js/Chart.js') ?>"></script>
+  <script src="<?php echo base_url('assets/bower_components/chart.js/Chart.js') ?>"></script>
 
   <!-- icheck -->
   <script src="<?php echo base_url('assets/plugins/iCheck/icheck.min.js') ?>"></script>
