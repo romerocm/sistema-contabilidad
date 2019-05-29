@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2019 a las 22:50:07
+-- Tiempo de generación: 29-05-2019 a las 22:30:28
 -- Versión del servidor: 10.1.39-MariaDB
 -- Versión de PHP: 7.2.18
 
@@ -243,6 +243,13 @@ CREATE TABLE `peps_compras` (
   `total` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `peps_compras`
+--
+
+INSERT INTO `peps_compras` (`ID`, `fecha`, `qty`, `price`, `total`) VALUES
+(2147483647, 'Compra', '20', '32', '640');
+
 -- --------------------------------------------------------
 
 --
@@ -299,7 +306,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `sku`, `price`, `qty`, `image`, `description`, `attribute_value_id`, `brand_id`, `category_id`, `store_id`, `availability`) VALUES
-(12, 'Gafas Aumento 0.1', '1', '100', '-2', '<p>You did not select a file to upload.</p>', '<p>Gafas basicas</p>', '[\"18\",\"5\"]', '[\"4\"]', '[\"7\"]', 1, 1);
+(12, 'Gafas Aumento 0.1', '1', '100', '-2', '<p>You did not select a file to upload.</p>', '<p>Gafas basicas</p>', '[\"18\",\"5\"]', '[\"4\"]', '[\"7\"]', 1, 1),
+(14, 'Cristal Cerco', '12', '60', '20', '<p>You did not select a file to upload.</p>', '', '[\"5\"]', '[\"4\"]', '[\"7\"]', 1, 1),
+(17, 'Aros Roberson', '25', '32', '20', '<p>You did not select a file to upload.</p>', '', '[\"18\"]', '[\"6\"]', 'null', 1, 1);
 
 --
 -- Disparadores `products`
@@ -308,7 +317,7 @@ DELIMITER $$
 CREATE TRIGGER `pepsinvent` AFTER INSERT ON `products` FOR EACH ROW BEGIN
 DECLARE tot varchar(200);
 SET tot=(new.qty)*(new.price);
-INSERT INTO peps VALUES(CURRENT_TIMESTAMP(),'Compra',new.qty,new.price,tot,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO peps_compras VALUES(CURRENT_TIMESTAMP(),'Compra',new.qty,new.price,tot);
 END
 $$
 DELIMITER ;
@@ -528,7 +537,7 @@ ALTER TABLE `orders_item`
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `stores`
